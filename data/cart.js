@@ -42,9 +42,10 @@ export function addToCart(productId){
                   quantity: quantity,
                   deliveryOptionId: '1'
               });
-              saveToStorage();
+              
   
           }
+          saveToStorage();
   }
 
 
