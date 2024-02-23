@@ -57,6 +57,7 @@ export function addToCart(productId){
         }
         
     });
+    
     cart = newCart;
     saveToStorage();
 

@@ -8,7 +8,8 @@ import { renderPaymentSummary } from './paymentSummary.js';
 
 
 export function renderOrderSummary(){
-    let cartSummaryHTML = ''
+    let cartSummaryHTML = '';
+    let checkoutItems = 0;
 
     cart.forEach((cartItem)=>{
         const productId = cartItem.productId;
@@ -21,6 +22,9 @@ export function renderOrderSummary(){
             
             const deliveryDate = today.add(deliveryOption.deliveryDays,'days');
             const dateString = deliveryDate.format('dddd, MMMM D');
+        
+        checkoutItems += cartItem.quantity
+        
         
         cartSummaryHTML +=
     `<div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
@@ -62,6 +66,13 @@ export function renderOrderSummary(){
         </div>
         </div>
     </div>`;
+    document.querySelector('.js-checkout-items').innerHTML= `${checkoutItems} items`
+
+
+        
+        
+        
+
     });
 
     function deliveryOptionsHTML(matchingProduct, cartItem){
@@ -104,13 +115,21 @@ export function renderOrderSummary(){
     
     }
     document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML
+
+            
+
+
+
     document.querySelectorAll('.js-delete-link').forEach((link)=>{
         link.addEventListener('click',()=>{
             const productId =link.dataset.productId;
             removeFromCart(productId);
 
+
             const container = document.querySelector(`.js-cart-item-container-${productId}`);
             container.remove();
+            
+            
             renderPaymentSummary();
 
             
@@ -129,6 +148,8 @@ export function renderOrderSummary(){
     })
 
 }
+
+
 
 
 
